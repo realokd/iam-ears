@@ -32,22 +32,24 @@ const LandingPage = () => {
 
     //following block of else-if changes the active tab to the next tab or previous tab of the tab being closed
     let tabId = 0;
-    if (state.openedTabs[state.openedTabs.indexOf(id) + 1]) {
-      tabId = state.openedTabs[state.openedTabs.indexOf(id) + 1]; // id of the next tab to the tab being closed
-      showTab(tabId);
-    } else if (state.openedTabs[state.openedTabs.indexOf(id) - 1]) {
-      tabId = state.openedTabs[state.openedTabs.indexOf(id) - 1]; // id of the previous tab to the tab being closed
-      showTab(tabId);
-    } else {
-      setState((prev) => ({
-        ...prev,
-        activeTab: -1,
-      }));
+    if (state.activeTab === id) {
+      if (state.openedTabs[state.openedTabs.indexOf(id) + 1]) {
+        tabId = state.openedTabs[state.openedTabs.indexOf(id) + 1]; // id of the next tab to the tab being closed
+        showTab(tabId);
+      } else if (state.openedTabs[state.openedTabs.indexOf(id) - 1]) {
+        tabId = state.openedTabs[state.openedTabs.indexOf(id) - 1]; // id of the previous tab to the tab being closed
+        showTab(tabId);
+      } else {
+        setState((prev) => ({
+          ...prev,
+          activeTab: -1,
+        }));
+      }
     }
 
     setState((prev) => ({
       ...prev,
-      activeTab: tabId,
+      activeTab: state.activeTab === id ? tabId : prev.activeTab,
       openedTabs: prev.openedTabs.filter((e) => e !== id),
     }));
   };
@@ -68,8 +70,8 @@ const LandingPage = () => {
   };
 
   return (
-    <section className="w-screen h-screen bg-black flex justify-center items-center">
-      <div className=" sm:w-11/12 w-full h-[90%] flex flex-col justify-start items-start rounded-lg ring-white">
+    <section className="w-screen h-screen flex bg-black justify-center items-center">
+      <div className=" sm:w-11/12 w-full h-[90%] flex flex-col justify-start items-start border border-slate-100/50">
         <div className="w-full h-12 bg-[#141414] grid grid-cols-12 mb-1">
           <div className=" sm:col-span-3 col-span-5 flex justify-center items-center text-slate-100">
             Events Viewer
