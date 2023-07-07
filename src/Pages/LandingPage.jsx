@@ -134,4 +134,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-// export {openTab, closeTab}
